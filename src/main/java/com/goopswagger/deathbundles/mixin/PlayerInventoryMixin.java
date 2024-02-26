@@ -40,7 +40,8 @@ public class PlayerInventoryMixin {
 			if (FabricLoader.getInstance().isModLoaded("trinkets"))
 				TrinketCompatUtil.handleTrinkets(player, stack);
 			if (DeathBundleItem.getBundleOccupancy(stack) != 0)
-				player.dropItem(stack, false, false);
+				player.dropItem(stack, true, false);
 		}
+		ci.cancel();
 	}
 }
