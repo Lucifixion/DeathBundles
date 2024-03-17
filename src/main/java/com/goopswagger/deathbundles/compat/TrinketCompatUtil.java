@@ -1,12 +1,12 @@
 package com.goopswagger.deathbundles.compat;
 
-import com.goopswagger.deathbundles.item.DeathBundleItem;
 import dev.emi.trinkets.api.TrinketEnums;
 import dev.emi.trinkets.api.TrinketInventory;
 import dev.emi.trinkets.api.TrinketsApi;
 import dev.emi.trinkets.api.event.TrinketDropCallback;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BundleItem;
 import net.minecraft.item.ItemStack;
 
 import java.util.Objects;
@@ -33,7 +33,8 @@ public class TrinketCompatUtil {
                 }
 
                 if (Objects.requireNonNull(dropRule) == TrinketEnums.DropRule.DROP) {
-                    DeathBundleItem.addToBundle(bundle, trinketStack);
+                    BundleItem.addToBundle(bundle, trinketStack);
+                    trinketStack.decrement(trinketStack.getCount());
                 }
                 ref.inventory().setStack(ref.index(), ItemStack.EMPTY);
             }

@@ -1,6 +1,6 @@
 package com.goopswagger.deathbundles.mixin;
 
-import com.goopswagger.deathbundles.DeathBundles;
+import com.goopswagger.deathbundles.util.DeathBundleUtil;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
@@ -18,13 +18,13 @@ public abstract class ItemEntityMixin {
 
     @Inject(at = @At("TAIL"), method = "setStack")
     private void setStack(ItemStack stack, CallbackInfo ci) {
-        if (stack.getItem() == DeathBundles.DEATH_BUNDLE)
+        if (DeathBundleUtil.isDeathBundle(stack))
             setNeverDespawn();
     }
 
     @Inject(at = @At("HEAD"), method = "damage", cancellable = true)
     private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (!this.getStack().isEmpty() && this.getStack().isOf(DeathBundles.DEATH_BUNDLE))
+        if (!this.getStack().isEmpty() && DeathBundleUtil.isDeathBundle(this.getStack()))
             cir.setReturnValue(false);
     }
 }
