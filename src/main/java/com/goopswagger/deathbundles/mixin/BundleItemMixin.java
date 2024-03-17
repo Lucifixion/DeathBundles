@@ -121,6 +121,11 @@ public abstract class BundleItemMixin extends Item implements DeathBundleItemExt
         user.getStackInHand(hand).decrement(1);
     }
 
+    @Inject(at = @At("HEAD"), method = "isItemBarVisible", cancellable = true)
+    public void db_isItemBarVisible(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        if (DeathBundleUtil.isDeathBundle(stack)) cir.setReturnValue(false);
+    }
+
     @Override
     public boolean isDeathBundle(NbtCompound nbtCompound) {
         return nbtCompound != null && nbtCompound.contains(DEATHBUNDLE_KEY) && nbtCompound.getBoolean(DEATHBUNDLE_KEY);
